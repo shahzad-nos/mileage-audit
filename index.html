@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<img
+  alt="Side profile of a car"
+  width="112"
+  height="56"
+  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 112 56'%3E%3Cpath d='M10 37v-8l14-5 12-13h37l14 13 13 4v9H10Z' fill='none' stroke='%237dd3fc' stroke-width='3' stroke-linejoin='round'/%3E%3Cpath d='M24 24h63M55 11v13' stroke='%237dd3fc' stroke-width='3'/%3E%3Ccircle cx='31' cy='38' r='8' fill='%230b1220' stroke='%237dd3fc' stroke-width='3'/%3E%3Ccircle cx='81' cy='38' r='8' fill='%230b1220' stroke='%237dd3fc' stroke-width='3'/%3E%3C/svg%3E"
+>
+  <title>Vehicle Mileage Audit</title>
+  <style>
+  :root {
+    color-scheme: dark;
+    --text: #eef5ff;
+    --muted: #a9bad1;
+    --accent: #7dd3fc;
+    --border: #29415b;
+    --panel: #101e2e;
+    font-family: "Segoe UI", system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    min-height: 100%;
+    background: radial-gradient(ellipse at top, #1a3653, #080e18 68%);
+  }
+
+  body {
+    position: relative;
+    width: min(900px, calc(100% - 32px));
+    margin: clamp(20px, 7vw, 64px) auto;
+    padding: clamp(20px, 5vw, 48px);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: #0b1522;
+    color: var(--text);
+    box-shadow: 0 24px 80px #0006;
+  }
+
+  body::before {
+    content: "SEPOLIA TESTNET";
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 6px 11px;
+    border: 1px solid #33536c;
+    border-radius: 100px;
+    color: var(--accent);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+  }
+
+  body > img {
+    display: block;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--panel);
+  }
+
+  h1 {
+    margin: 14px 0 8px;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -.045em;
+  }
+
+  h2 {
+    margin: 32px 0 10px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin: 8px 0 16px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  button {
+    padding: 11px 17px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #082032;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  button:hover { background: #bae6fd; }
+  button:disabled { opacity: .55; cursor: wait; }
+
+  button:focus-visible, input:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  #connect {
+    border-color: #385674;
+    background: #16283a;
+    color: var(--text);
+  }
+
+  #connect:hover { background: #203a53; }
+
+  #status {
+    margin-top: 22px;
+    padding: 18px 20px;
+    border: 1px solid #355675;
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    background: linear-gradient(120deg, #142d45, #101d2d);
+    color: var(--text);
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-weight: 650;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ul {
+    display: grid;
+    gap: 10px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding: 15px 17px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--panel);
+    color: #d9e7f7;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  #inspection-form {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--panel);
+  }
+
+  #inspection-form p { margin: 0; }
+
+  label {
+    display: block;
+    color: var(--text);
+    font-size: .9rem;
+    font-weight: 600;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    border: 1px solid #385674;
+    border-radius: 8px;
+    background: #0b1522;
+    color: var(--text);
+    font: inherit;
+  }
+
+  #inspection-form button {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  #transaction-result:not(:empty) {
+    margin-top: 14px;
+    padding: 12px 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--panel);
+    color: var(--text);
+  }
+
+  a { color: var(--accent); text-underline-offset: 3px; }
+
+  @media (max-width: 600px) {
+    #inspection-form { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <h1>Vehicle Mileage Audit</h1>
+  <p>Check the latest accepted mileage for our demo car on Sepolia.</p>
+  <button id="connect">Connect MetaMask</button>
+  <p id="status" role="status">Connect your wallet to load the mileage.</p>
+
+  <script type="module">
+  import { BrowserProvider, Contract } from "https://cdn.jsdelivr.net/npm/ethers@6.14.0/+esm";
+
+  const address = "0xb614E3DB02e7641688E4091E0115d435a5f8Ee14";
+  const abi = [
+    "function getVehicleStatus() view returns (uint256, bool)",
+    "function getInspectionCount() view returns (uint256)",
+    "function getInspection(uint256 index) view returns (tuple(uint256 dashboard, uint256 moduleA, uint256 moduleB, uint256 submittedAt, bool flagged, uint256 correctedMileage, string reviewReason, uint256 reviewedAt))"
+  ];
+
+  const status = document.getElementById("status");
+  const heading = document.createElement("h2");
+  heading.textContent = "Inspection history";
+  const history = document.createElement("ul");
+  status.after(heading, history);
+
+  function km(value) {
+    return `${value.toLocaleString()} km`;
+  }
+
+  document.getElementById("connect").addEventListener("click", async () => {
+    try {
+      if (!window.ethereum) {
+        status.textContent = "MetaMask is unavailable on this page.";
+        return;
+      }
+
+      const provider = new BrowserProvider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+
+      if ((await provider.getNetwork()).chainId !== 11155111n) {
+        status.textContent = "Switch this site to Sepolia in MetaMask and try again.";
+        return;
+      }
+
+      const contract = new Contract(address, abi, provider);
+      const [mileage, needsReview] = await contract.getVehicleStatus();
+      const reviewStatus = needsReview ? "Review pending." : "No open review.";
+      status.textContent = `Accepted mileage: ${km(mileage)}. ${reviewStatus}`;
+
+      const count = await contract.getInspectionCount();
+      history.replaceChildren();
+
+      for (let index = 0n; index < count; index++) {
+        const entry = await contract.getInspection(index);
+        const item = document.createElement("li");
+
+        item.textContent =
+          `Inspection ${index + 1n}: Dashboard ${km(entry.dashboard)}, ` +
+          `Module A ${km(entry.moduleA)}, Module B ${km(entry.moduleB)}.`;
+
+        if (entry.reviewedAt !== 0n) {
+          item.textContent +=
+            ` Flagged at inspection. Reviewer accepted ${km(entry.correctedMileage)}. ` +
+            `Reason: ${entry.reviewReason}`;
+        } else if (entry.flagged) {
+          item.textContent += " Needs review.";
+        }
+
+        history.append(item);
+      }
+    } catch (error) {
+      status.textContent = error.shortMessage || error.message;
+    }
+  });
+  history.insertAdjacentHTML("afterend", `
+    <h2>Submit an inspection</h2>
+    <p>Use the reporter wallet to submit mileage readings in kilometers.</p>
+    <form id="inspection-form">
+      <p><label>Dashboard <input name="dashboard" type="number" min="0" step="1" required></label></p>
+      <p><label>Module A <input name="moduleA" type="number" min="0" step="1" required></label></p>
+      <p><label>Module B <input name="moduleB" type="number" min="0" step="1" required></label></p>
+      <button type="submit">Submit inspection</button>
+    </form>
+    <p id="transaction-result" role="status"></p>
+  `);
+
+  const form = document.getElementById("inspection-form");
+  const result = document.getElementById("transaction-result");
+  const submitButton = form.querySelector("button");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    submitButton.disabled = true;
+
+    try {
+      if (!window.ethereum) {
+        result.textContent = "Open this page in Chrome with MetaMask enabled.";
+        return;
+      }
+
+      const provider = new BrowserProvider(window.ethereum);
+      if ((await provider.getNetwork()).chainId !== 11155111n) {
+        result.textContent = "Switch this site to Sepolia in MetaMask.";
+        return;
+      }
+
+      const signer = await provider.getSigner();
+      const contract = new Contract(address, [
+        "function submitInspection(uint256 dashboard, uint256 moduleA, uint256 moduleB)"
+      ], signer);
+
+      const fields = new FormData(form);
+      result.textContent = "Review the transaction in MetaMask.";
+      const transaction = await contract.submitInspection(
+        BigInt(fields.get("dashboard")),
+        BigInt(fields.get("moduleA")),
+        BigInt(fields.get("moduleB"))
+      );
+
+      result.textContent = "Transaction submitted. Waiting for confirmation.";
+      await transaction.wait();
+
+      const link = document.createElement("a");
+      link.href = `https://sepolia.etherscan.io/tx/${transaction.hash}`;
+      link.textContent = "View on Sepolia Etherscan";
+      result.replaceChildren("Inspection confirmed. ", link);
+    } catch (error) {
+      result.textContent = error.reason || error.shortMessage || error.message;
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
